@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-
+//testing
 public class MapsActivity extends FragmentActivity
         implements
         GoogleApiClient.ConnectionCallbacks,
