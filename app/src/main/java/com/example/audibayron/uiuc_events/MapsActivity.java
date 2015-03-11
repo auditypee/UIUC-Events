@@ -5,6 +5,7 @@ import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -13,6 +14,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -23,12 +25,12 @@ public class MapsActivity extends FragmentActivity
         implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener,
+        GoogleMap.OnMyLocationButtonClickListener,
+        OnMapReadyCallback{
 
     private GoogleApiClient mGoogleApiClient;
-
     public static final String TAG = MapsActivity.class.getSimpleName();
-
     private LocationRequest mLocationRequest;
 
     private void handleNewLocation(Location location) {
@@ -55,6 +57,9 @@ public class MapsActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -62,8 +67,8 @@ public class MapsActivity extends FragmentActivity
                 .build();
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
-                .setInterval(50 * 1000) //x seconds in milliseconds; lower = more power used
-                .setFastestInterval(1 * 1000); //1 second in milliseconds; fastest time it can use
+                .setInterval(10 * 1000) //x seconds in milliseconds; lower = more power used
+                .setFastestInterval(16); //1 second in milliseconds; fastest time it can use
     }
 
     @Override
@@ -158,4 +163,15 @@ public class MapsActivity extends FragmentActivity
         handleNewLocation(location);
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.setMyLocationEnabled(true);
+        googleMap.setOnMyLocationButtonClickListener(this);
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        Toast.makeText(this, "MyLocation", Toast.LENGTH_SHORT).show();
+        return false;
+    }
 }
