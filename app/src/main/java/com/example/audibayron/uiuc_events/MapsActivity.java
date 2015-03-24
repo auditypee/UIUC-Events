@@ -5,7 +5,6 @@ import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -17,6 +16,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class MapsActivity extends FragmentActivity
@@ -25,11 +26,21 @@ public class MapsActivity extends FragmentActivity
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
         GoogleMap.OnMyLocationButtonClickListener,
-        OnMapReadyCallback{
+        OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener {
 
     private GoogleApiClient mGoogleApiClient;
     public static final String TAG = MapsActivity.class.getSimpleName();
     private LocationRequest mLocationRequest;
+
+    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+
+    //Dummy markers
+    private static final LatLng QUAD = new LatLng(40.10866905, -88.22718859);
+    private static final LatLng GRAINGER = new LatLng(40.11246817, -88.22687745);
+
+    private Marker mQuad;
+    private Marker mGrainger;
 
     private void handleNewLocation(Location location) {
         Log.d(TAG, location.toString());
@@ -41,10 +52,19 @@ public class MapsActivity extends FragmentActivity
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
+    private void addMarkersToMap() {
+        mQuad = mMap.addMarker(new MarkerOptions()
+            .position(QUAD)
+            .title("Event 1")
+            .snippet("Time created"));
+        mGrainger = mMap.addMarker(new MarkerOptions()
+            .position(GRAINGER)
+            .title("Event 2")
+            .snippet("Time created"));
+    }
+
     private final static int
             CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +137,6 @@ public class MapsActivity extends FragmentActivity
      */
     private void setUpMap() {
         //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-
     }
 
     @Override
@@ -129,7 +148,7 @@ public class MapsActivity extends FragmentActivity
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
         else {
-            handleNewLocation (location);
+            handleNewLocation(location);
         }
     }
 
@@ -159,13 +178,26 @@ public class MapsActivity extends FragmentActivity
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.setMyLocationEnabled(true);
-        googleMap.setOnMyLocationButtonClickListener(this);
+        addMarkersToMap();
+        mMap.setOnMarkerClickListener(this);
+
+        mMap.setOnMyLocationButtonClickListener(this);
+        mMap.setMyLocationEnabled(true);
+        //Zooms the camera initially to the user
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+
+
     }
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation", Toast.LENGTH_SHORT).show();
+    //what happens when the location button is clicked
+        return false;
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+    //can make the markers do what we tell it to if clicked on
         return false;
     }
 }
