@@ -5,6 +5,7 @@ import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TabHost;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -70,6 +71,20 @@ public class MapsActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost.setup();
+        //First tab Maps
+        TabHost.TabSpec specs = tabHost.newTabSpec("tag1");
+        specs.setContent(R.id.Maps);
+        specs.setIndicator("Maps");
+        tabHost.addTab(specs);
+        //Second tab Events
+        specs = tabHost.newTabSpec("tag2");
+        specs.setContent(R.id.Events);
+        specs.setIndicator("Events");
+        tabHost.addTab(specs);
+
         setUpMapIfNeeded();
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
