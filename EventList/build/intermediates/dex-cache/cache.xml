@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Elliot\Downloads\CS125-v001-windows-64bit (1)\EventList\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Elliot\Downloads\CS125-v001-windows-64bit (1)\EventList\app\build\intermediates\pre-dexed\debug\classes-46943e4ce498839c33e7784340428ede7c6e54d0.jar" />
+    </item>
+    <item
+        jar="C:\Users\Elliot\Downloads\CS125-v001-windows-64bit (1)\EventList\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Users\Elliot\Downloads\CS125-v001-windows-64bit (1)\EventList\app\build\intermediates\pre-dexed\debug\classes-c5f7a35eb8cf725f01345f5342884e41d97b1036.jar" />
+    </item>
+    <item
+        jar="C:\Users\Elliot\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="C:\Users\Elliot\Downloads\CS125-v001-windows-64bit (1)\EventList\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-6bff0477c5e2af1ea1c2d1d5caf69ec9f1846cf8.jar" />
+    </item>
+    <item
+        jar="C:\Users\Elliot\Downloads\CS125-v001-windows-64bit (1)\EventList\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\Elliot\Downloads\CS125-v001-windows-64bit (1)\EventList\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-7cd6d8fc4fb142a6b264726005c9c8b4f0c1741b.jar" />
+    </item>
+
+</items>
