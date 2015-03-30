@@ -1,20 +1,24 @@
 package com.example.audibayron.uiuc_events;
 
+import android.app.TabActivity;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 
-import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,6 +26,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.w3c.dom.Text;
 
 
 public class MapsActivity extends FragmentActivity
@@ -78,7 +84,7 @@ public class MapsActivity extends FragmentActivity
         tabHost.addTab(specs);
         //Second tab Events
         specs = tabHost.newTabSpec("tag2");
-        specs.setContent(R.id.Events);
+        specs.setContent(new Intent(this, MainActivity.class));
         specs.setIndicator("Events");
         tabHost.addTab(specs);
 
@@ -234,6 +240,17 @@ public class MapsActivity extends FragmentActivity
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-
+        TextView detailsScroll = (TextView) findViewById(R.id.textView3);
+        detailsScroll.setMovementMethod(new ScrollingMovementMethod());
+        View mapToChange = (View) findViewById(R.id.map);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mapToChange.getLayoutParams();
+        if (params.weight == 1f) {
+            params.weight = 0.4f;
+            mapToChange.setLayoutParams(params);
+        }
+        else if (params.weight == 0.4f) {
+            params.weight = 1f;
+            mapToChange.setLayoutParams(params);
+        }
     }
 }
