@@ -1,7 +1,5 @@
 package com.example.audibayron.uiuc_events;
 
-import android.app.TabActivity;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
@@ -9,9 +7,7 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -26,9 +22,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.w3c.dom.Text;
-
 
 public class MapsActivity extends FragmentActivity
         implements
@@ -46,8 +39,6 @@ public class MapsActivity extends FragmentActivity
     private LocationRequest mLocationRequest;
     private final static int
             CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-    private boolean mInfoWindowIsOn = false;
-    private boolean mMapIsTouched = false;
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
@@ -232,18 +223,19 @@ public class MapsActivity extends FragmentActivity
     public void onInfoWindowClick(Marker marker) {
         TextView detailsScroll = (TextView) findViewById(R.id.textView3);
         detailsScroll.setMovementMethod(new ScrollingMovementMethod());
-        View mapToChange = (View) findViewById(R.id.map);
+        View mapToChange = findViewById(R.id.map);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mapToChange.getLayoutParams();
-        if (!mInfoWindowIsOn) {
-            params.weight = 0.4f;
-            mInfoWindowIsOn = true;
-        }
+        params.weight = 0.4f;
         mapToChange.setLayoutParams(params);
     }
 
+
     @Override
     public void onMapClick(LatLng latLng) {
-
+        View mapToChange = findViewById(R.id.map);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mapToChange.getLayoutParams();
+        params.weight = 1f;
+        mapToChange.setLayoutParams(params);
     }
 
 }
