@@ -38,13 +38,16 @@ public class MapsActivity extends FragmentActivity
         GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener,
-        GoogleMap.OnInfoWindowClickListener{
+        GoogleMap.OnInfoWindowClickListener,
+        GoogleMap.OnMapClickListener{
 
     private GoogleApiClient mGoogleApiClient;
     public static final String TAG = MapsActivity.class.getSimpleName();
     private LocationRequest mLocationRequest;
     private final static int
             CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    private boolean mInfoWindowIsOn = false;
+    private boolean mMapIsTouched = false;
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
@@ -74,20 +77,6 @@ public class MapsActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        //Tabs
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
-        tabHost.setup();
-        //First tab Maps
-        TabHost.TabSpec specs = tabHost.newTabSpec("tag1");
-        specs.setContent(R.id.Maps);
-        specs.setIndicator("Maps");
-        tabHost.addTab(specs);
-        //Second tab Events
-        specs = tabHost.newTabSpec("tag2");
-        specs.setContent(new Intent(this, MainActivity.class));
-        specs.setIndicator("Events");
-        tabHost.addTab(specs);
-
         setUpMapIfNeeded();
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -110,7 +99,7 @@ public class MapsActivity extends FragmentActivity
         double currentLongitude = location.getLongitude();
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
 
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
     private void addMarkersToMap() {
@@ -220,6 +209,7 @@ public class MapsActivity extends FragmentActivity
         mMap.setOnMarkerClickListener(this);
         mMap.setOnInfoWindowClickListener(this);
 
+        mMap.setOnMapClickListener(this);
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setMyLocationEnabled(true);
         //Zooms the camera initially to the user
@@ -244,13 +234,16 @@ public class MapsActivity extends FragmentActivity
         detailsScroll.setMovementMethod(new ScrollingMovementMethod());
         View mapToChange = (View) findViewById(R.id.map);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mapToChange.getLayoutParams();
-        if (params.weight == 1f) {
+        if (!mInfoWindowIsOn) {
             params.weight = 0.4f;
-            mapToChange.setLayoutParams(params);
+            mInfoWindowIsOn = true;
         }
-        else if (params.weight == 0.4f) {
-            params.weight = 1f;
-            mapToChange.setLayoutParams(params);
-        }
+        mapToChange.setLayoutParams(params);
     }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+
+    }
+
 }
