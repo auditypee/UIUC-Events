@@ -1,4 +1,4 @@
-package com.example.elliot.eventlist1;
+package com.example.audibayron.uiuc_events;
 
 /**
 * Created by Elliot on 3/24/2015.
