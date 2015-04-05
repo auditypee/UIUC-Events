@@ -6,7 +6,8 @@ public class Events {
     //Variables that takes from the database
     private int _id;
     private String eventName;
-    private LatLng address;
+    private String addressName;
+    private LatLng addressCo;
     private String details;
     private int date;
     private int month;
@@ -15,28 +16,18 @@ public class Events {
     /**
      * CONSTRUCTORS
      */
-
     //Empty Constructor
     public Events() {
 
     }
     //Main Constructor
-    public Events(int mId, String mEventName, LatLng mAddress, String mDetails,
+    public Events(int mId, String mEventName, String mAddressName, LatLng mAddressCo, String mDetails,
                   int mDate, int mMonth, int mYear) {
         this._id = mId;
         this.eventName = mEventName;
-        this.address = mAddress;
+        this.addressName = mAddressName;
+        this.addressCo = mAddressCo;
         this.details = mDetails;
-        this.date = mDate;
-        this.month = mMonth;
-        this.year = mYear;
-    }
-    //Constructor with no Details
-    public Events(int mId, String mEventName, LatLng mAddress,
-                  int mDate, int mMonth, int mYear){
-        this._id = mId;
-        this.eventName = mEventName;
-        this.address = mAddress;
         this.date = mDate;
         this.month = mMonth;
         this.year = mYear;
@@ -52,8 +43,11 @@ public class Events {
     public String getEventName() {
         return eventName;
     }
-    public LatLng getAddress() {
-        return address;
+    public String getAddressName() {
+        return addressName;
+    }
+    public LatLng getAddressCo() {
+        return addressCo;
     }
     public String getDetails() {
         return details;
@@ -68,14 +62,14 @@ public class Events {
         return year;
     }
     //Setters
-    public void setId(int id) {
-        this._id = id;
+    public void setEventName(String mEventName) {
+        this.eventName = mEventName;
     }
-    public void setEventName(String newEventName) {
-        this.eventName = newEventName;
+    public void setAddressName(String mAddressName) {
+        this.addressName = mAddressName;
     }
-    public void setAddress(LatLng newAddress) {
-        this.address = newAddress;
+    public void setAddressCo(LatLng mAddressCo) {
+        this.addressCo = mAddressCo;
     }
     public void setDetails(String newDetails) {
         this.details = newDetails;
