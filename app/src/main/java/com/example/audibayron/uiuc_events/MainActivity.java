@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 
@@ -16,6 +18,15 @@ public class MainActivity extends Activity {
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
+    private ArrayList<Integer> eventsId = new ArrayList<>();
+    private ArrayList<String> eventsName = new ArrayList<>();
+    private ArrayList<String> eventsAddress = new ArrayList<>();
+    private ArrayList<Integer> eventsDate = new ArrayList<>();
+    private ArrayList<Integer> eventsMonth = new ArrayList<>();
+    private ArrayList<Integer> eventsYear = new ArrayList<>();
+    private ArrayList<String> eventsDetails = new ArrayList<>();
+    private ArrayList<String> eventsLatLng = new ArrayList<>();
+
 
     DBAdapter myDb;
 
@@ -32,15 +43,20 @@ public class MainActivity extends Activity {
 
 
         openDB();
-        Cursor cursor = myDb.getAllRows();
-        displayRecordSet(cursor);
+
+        Cursor crs = myDb.getAllRows();
+        copyRecordSet(crs);
+
+        for(int i = 0; i <= eventsId.size(); i++){
+            Cursor cursor = myDb.getRow(i);
+            displayRecordSet(cursor);
+        }
         setupListViewListener();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        
         closeDB();
     }
 
@@ -78,7 +94,11 @@ public class MainActivity extends Activity {
 
     public void onAddItem(View v) {
 
-        long newID = myDb.insertRow("Party", "123 Ave", 1, 2, 2016);
+        double lat = 45.4;
+        double lng = 46.5;
+        LatLng latlng = new LatLng(lat, lng);
+
+        long newID = myDb.insertRow("Party", "123 Ave", 1, 2, 2016, "party", latlng);
         Cursor cursor = myDb.getRow(newID);
         displayRecordSet(cursor);
     }
@@ -87,26 +107,65 @@ public class MainActivity extends Activity {
         String message = "";
 
         if (cursor.moveToFirst()) {
-            do {
                 // Process the data:
+            do {
                 int id = cursor.getInt(DBAdapter.COL_ROWID);
                 String name = cursor.getString(DBAdapter.COL_NAME);
                 String address = cursor.getString(DBAdapter.COL_ADDRESS);
                 int date = cursor.getInt(DBAdapter.COL_DATE);
                 int month = cursor.getInt(DBAdapter.COL_MONTH);
                 int year = cursor.getInt(DBAdapter.COL_YEAR);
+                String details = cursor.getString(DBAdapter.COL_DETAILS);
+                String latlng = cursor.getString(DBAdapter.COL_LATLNG);
 
                 // Append data to the message:
                 message += "id=" + id
-                        +", name=" + name
-                        +", address=" + address
-                        +", date=" + month + "/" + date + "/" + year
-                        +"\n";
-            } while(cursor.moveToNext());
+                        + ", name=" + name
+                        + ", address=" + address
+                        + ", date=" + month + "/" + date + "/" + year
+                        + ", details=" + details
+                        + ", " + latlng
+                        + "\n";
+
+                displayText(message);
+
+            } while (cursor.moveToNext()) ;
         }
+
         cursor.close();
 
-        displayText(message);
+
+    }
+
+    private void copyRecordSet(Cursor cursor){
+
+        if (cursor.moveToFirst()) {
+            // Process the data:
+            do {
+                int id = cursor.getInt(DBAdapter.COL_ROWID);
+                String name = cursor.getString(DBAdapter.COL_NAME);
+                String address = cursor.getString(DBAdapter.COL_ADDRESS);
+                int date = cursor.getInt(DBAdapter.COL_DATE);
+                int month = cursor.getInt(DBAdapter.COL_MONTH);
+                int year = cursor.getInt(DBAdapter.COL_YEAR);
+                String details = cursor.getString(DBAdapter.COL_DETAILS);
+                String latlng = cursor.getString(DBAdapter.COL_LATLNG);
+
+                eventsId.add(id);
+                eventsName.add(name);
+                eventsAddress.add(address);
+                eventsDate.add(date);
+                eventsMonth.add(month);
+                eventsYear.add(year);
+                eventsDetails.add(details);
+                eventsLatLng.add(latlng);
+
+
+            } while (cursor.moveToNext()) ;
+        }
+
+        cursor.close();
+
     }
 
 

@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 
 // TO USE:
 // Change the package (at top) to match your project.
@@ -34,6 +36,8 @@ public class DBAdapter {
     public static final String KEY_DATE = "date";
     public static final String KEY_MONTH = "month";
     public static final String KEY_YEAR = "year";
+    public static final String KEY_DETAILS = "details";
+    public static final String KEY_LATLNG = "latlng";
 
     // TODO: Setup your field numbers here (0 = KEY_ROWID, 1=...)
     public static final int COL_NAME = 1;
@@ -41,15 +45,17 @@ public class DBAdapter {
     public static final int COL_DATE = 3;
     public static final int COL_MONTH = 4;
     public static final int COL_YEAR = 5;
+    public static final int COL_DETAILS = 6;
+    public static final int COL_LATLNG = 7;
 
 
-    public static final String[] ALL_KEYS = new String[] {KEY_ROWID, KEY_NAME, KEY_ADDRESS, KEY_DATE, KEY_MONTH, KEY_YEAR};
+    public static final String[] ALL_KEYS = new String[] {KEY_ROWID, KEY_NAME, KEY_ADDRESS, KEY_DATE, KEY_MONTH, KEY_YEAR, KEY_DETAILS, KEY_LATLNG};
 
     // DB info: it's name, and the table we are using (just one).
     public static final String DATABASE_NAME = "MyDb";
     public static final String DATABASE_TABLE = "mainTable";
     // Track DB version if a new version of your app changes the format.
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 7;
 
     private static final String DATABASE_CREATE_SQL =
             "create table " + DATABASE_TABLE
@@ -69,7 +75,9 @@ public class DBAdapter {
                     + KEY_ADDRESS + " string not null, "
                     + KEY_DATE + " integer not null, "
                     + KEY_MONTH + " integer not null, "
-                    + KEY_YEAR + " integer not null"
+                    + KEY_YEAR + " integer not null, "
+                    + KEY_DETAILS + " text not null, "
+                    + KEY_LATLNG + " latlng not null "
 
                     // Rest  of creation:
                     + ");";
@@ -101,7 +109,7 @@ public class DBAdapter {
     }
 
     // Add a new set of values to the database.
-    public long insertRow(String name, String address, int date, int month, int year) {
+    public long insertRow(String name, String address, int date, int month, int year, String details, LatLng latlng) {
 		/*
 		 * CHANGE 3:
 		 */
@@ -114,6 +122,8 @@ public class DBAdapter {
         initialValues.put(KEY_DATE, date);
         initialValues.put(KEY_MONTH, month);
         initialValues.put(KEY_YEAR, year);
+        initialValues.put(KEY_DETAILS, details);
+        initialValues.put(KEY_LATLNG, latlng.toString());
 
         // Insert it into the database.
         return db.insert(DATABASE_TABLE, null, initialValues);
@@ -158,8 +168,12 @@ public class DBAdapter {
         return c;
     }
 
+    public Cursor getSpecificItem(){
+        return db.rawQuery("SELECT * FROM mainTable", null);
+    }
+
     // Change an existing row to be equal to new data.
-    public boolean updateRow(long rowId, String name, String address, int date, int month, int year) {
+    public boolean updateRow(long rowId, String name, String address, int date, int month, int year, String details, LatLng latlng) {
         String where = KEY_ROWID + "=" + rowId;
 
 		/*
@@ -174,6 +188,8 @@ public class DBAdapter {
         newValues.put(KEY_DATE, date);
         newValues.put(KEY_MONTH, month);
         newValues.put(KEY_YEAR, year);
+        newValues.put(KEY_DETAILS, details);
+        newValues.put(KEY_LATLNG, latlng.toString());
 
         // Insert it into the database.
         return db.update(DATABASE_TABLE, newValues, where, null) != 0;
