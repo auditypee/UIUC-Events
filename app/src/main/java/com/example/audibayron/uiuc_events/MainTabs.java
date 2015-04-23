@@ -17,7 +17,7 @@ public class MainTabs extends TabActivity {
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab1")
                         .setIndicator("Map")
-                        .setContent(new Intent(this, MapsActivity.class))
+                        .setContent(new Intent(this, Map.class))
         );
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab2")

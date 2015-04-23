@@ -13,6 +13,7 @@ public class Events {
     private int month;
     private int year;
 
+    DBAdapter myDb;
     /**
      * CONSTRUCTORS
      */
@@ -99,5 +100,7 @@ public class Events {
     public void setYear(int mYear) {
         this.year = mYear;
     }
+
+
 }
 

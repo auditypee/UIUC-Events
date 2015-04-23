@@ -2,30 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
         android:background="#fff">
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginTop="10dp"
-      android:orientation="vertical">
+      android:layout_width="200dp"
+      android:layout_height="fill_parent"
+        android:orientation="vertical">
 
       <TextView
           android:text="Event"
           android:textAppearance="?android:attr/textAppearanceMedium"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:id="@+id/eventName"
-          android:gravity="center"
-          android:layout_marginBottom="10dp"
-          android:textColor="#ffffbd00"/>
-      <TextView
-          android:text="Time Created"
-          android:textAppearance="?android:attr/textAppearanceMedium"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/timeCreated"
+          android:id="@+id/iEventName"
           android:gravity="center"
           android:layout_marginBottom="10dp"
           android:textColor="#ffffbd00"/>
@@ -34,7 +24,7 @@
           android:layout_width="match_parent"
           android:textAppearance="?android:attr/textAppearanceMedium"
           android:layout_height="wrap_content"
-          android:id="@+id/details"
+          android:id="@+id/iDetails"
           android:gravity="center"
           android:layout_marginBottom="10dp"
           android:textColor="#ffffbd00"/>

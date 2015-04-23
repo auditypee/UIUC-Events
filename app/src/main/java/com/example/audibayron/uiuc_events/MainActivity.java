@@ -27,7 +27,6 @@ public class MainActivity extends Activity {
     private ArrayList<String> eventsDetails = new ArrayList<>();
     private ArrayList<String> eventsLatLng = new ArrayList<>();
 
-
     DBAdapter myDb;
 
     @Override
@@ -150,6 +149,8 @@ public class MainActivity extends Activity {
                 int year = cursor.getInt(DBAdapter.COL_YEAR);
                 String details = cursor.getString(DBAdapter.COL_DETAILS);
                 String latlng = cursor.getString(DBAdapter.COL_LATLNG);
+
+
 
                 eventsId.add(id);
                 eventsName.add(name);
