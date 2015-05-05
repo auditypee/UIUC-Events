@@ -7,37 +7,61 @@ xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:weightSum="1">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:id="@+id/map"
-        tools:context=".MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        tools:layout="@layout/abc_action_menu_layout"
-        android:layout_gravity="right|top"
-        android:layout_weight="1" />
+        android:id="@+id/mapLayout"
+        android:animateLayoutChanges="true"
+        android:layout_weight="1">
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/map"
+            tools:context=".MapsActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            tools:layout="@layout/abc_action_menu_layout"
+            android:layout_gravity="right|top"
+            android:animateLayoutChanges="true" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight=".6"
-        android:background="#fff"
+        android:background="#ff000000"
+        android:animateLayoutChanges="true"
         android:weightSum="1"
         android:id="@+id/detailedView">
 
-        <TextView
+        <com.example.audibayron.uiuc_events.AutoResizeTextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Place Event here"
             android:id="@+id/dEventName"
-            android:layout_gravity="center_horizontal"
             android:layout_weight=".2"
+            android:textSize="45sp"
             android:gravity="center_vertical|center_horizontal"
-            android:textSize="45dp" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffe4e4e4"
+            android:background="#ff2d2d2d"
+            android:padding="10dp" />
 
-        <TextView
+        <com.example.audibayron.uiuc_events.AutoResizeTextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Address"
+            android:id="@+id/dAddress"
+            android:layout_weight=".2"
+            android:gravity="center|center_vertical"
+            android:textColor="#ff2d2d2d"
+            android:background="#ffe4e4e4" />
+
+        <com.example.audibayron.uiuc_events.AutoResizeTextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -46,16 +70,9 @@ xmlns:tools="http://schemas.android.com/tools"
             android:layout_gravity="center_horizontal"
             android:layout_weight=".1"
             android:gravity="center_vertical|center_horizontal"
-            android:textAlignment="gravity" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Small Text"
-            android:id="@+id/dAddress"
-            android:layout_weight=".1"
-            android:gravity="center|center_vertical" />
+            android:textAlignment="gravity"
+            android:textColor="#ff2d2d2d"
+            android:background="#ffe4e4e4" />
 
         <TextView
             android:layout_width="match_parent"
@@ -63,11 +80,13 @@ xmlns:tools="http://schemas.android.com/tools"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Details"
             android:id="@+id/dDetails"
-            android:textSize="35dp"
-            android:textAlignment="center"
-            android:layout_weight=".6"
-            android:gravity="center_vertical|center_horizontal"
-            android:scrollbars="vertical"/>
+            android:textSize="25dp"
+            android:textAlignment="gravity"
+            android:layout_weight=".5"
+            android:gravity="center_horizontal"
+            android:scrollbars="vertical"
+            android:textColor="#ff2d2d2d"
+            android:background="#ffe4e4e4" />
 
     </LinearLayout>
 

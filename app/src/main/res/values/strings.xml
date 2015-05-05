@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">UIUC-Events</string>
     <string name="title_activity_maps">Events</string>
+
+    <dimen name="map_dx">50dp</dimen>
+    <dimen name="map_dy">0dp</dimen>
 </resources>

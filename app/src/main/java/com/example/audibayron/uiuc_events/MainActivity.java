@@ -19,13 +19,10 @@ public class MainActivity extends Activity {
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
     private ArrayList<Integer> eventsId = new ArrayList<>();
-    private ArrayList<String> eventsName = new ArrayList<>();
-    private ArrayList<String> eventsAddress = new ArrayList<>();
-    private ArrayList<Integer> eventsDate = new ArrayList<>();
-    private ArrayList<Integer> eventsMonth = new ArrayList<>();
-    private ArrayList<Integer> eventsYear = new ArrayList<>();
-    private ArrayList<String> eventsDetails = new ArrayList<>();
-    private ArrayList<String> eventsLatLng = new ArrayList<>();
+
+    private Events[] eventsList = new Events[10000];
+    private int nextIndex = 0;
+
 
     DBAdapter myDb;
 
@@ -39,7 +36,6 @@ public class MainActivity extends Activity {
         itemsAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
-
 
         openDB();
 
@@ -93,11 +89,11 @@ public class MainActivity extends Activity {
 
     public void onAddItem(View v) {
 
-        double lat = 45.4;
-        double lng = 46.5;
+        double lat = 40.1118;
+        double lng = -88.2243;
         LatLng latlng = new LatLng(lat, lng);
 
-        long newID = myDb.insertRow("Party", "123 Ave", 1, 2, 2016, "party", latlng);
+        long newID = myDb.insertRow("Party", "123 Ave", 1, 2, 2016, "party", lat, lng);
         Cursor cursor = myDb.getRow(newID);
         displayRecordSet(cursor);
     }
@@ -106,7 +102,7 @@ public class MainActivity extends Activity {
         String message = "";
 
         if (cursor.moveToFirst()) {
-                // Process the data:
+            // Process the data:
             do {
                 int id = cursor.getInt(DBAdapter.COL_ROWID);
                 String name = cursor.getString(DBAdapter.COL_NAME);
@@ -115,7 +111,8 @@ public class MainActivity extends Activity {
                 int month = cursor.getInt(DBAdapter.COL_MONTH);
                 int year = cursor.getInt(DBAdapter.COL_YEAR);
                 String details = cursor.getString(DBAdapter.COL_DETAILS);
-                String latlng = cursor.getString(DBAdapter.COL_LATLNG);
+                Double lat = cursor.getDouble(DBAdapter.COL_LAT);
+                Double lng = cursor.getDouble(DBAdapter.COL_LNG);
 
                 // Append data to the message:
                 message += "id=" + id
@@ -123,7 +120,7 @@ public class MainActivity extends Activity {
                         + ", address=" + address
                         + ", date=" + month + "/" + date + "/" + year
                         + ", details=" + details
-                        + ", " + latlng
+                        + ", LatLng=" + lat + "/" + lng
                         + "\n";
 
                 displayText(message);
@@ -148,18 +145,16 @@ public class MainActivity extends Activity {
                 int month = cursor.getInt(DBAdapter.COL_MONTH);
                 int year = cursor.getInt(DBAdapter.COL_YEAR);
                 String details = cursor.getString(DBAdapter.COL_DETAILS);
-                String latlng = cursor.getString(DBAdapter.COL_LATLNG);
+                Double lat = cursor.getDouble(DBAdapter.COL_LAT);
+                Double lng = cursor.getDouble(DBAdapter.COL_LNG);
 
-
+                LatLng latlng = new LatLng(lat, lng);
 
                 eventsId.add(id);
-                eventsName.add(name);
-                eventsAddress.add(address);
-                eventsDate.add(date);
-                eventsMonth.add(month);
-                eventsYear.add(year);
-                eventsDetails.add(details);
-                eventsLatLng.add(latlng);
+
+                Events newEvents = new Events(id, name, address, date, month, year, details, lat, lng);
+
+                eventsList[nextIndex++] = newEvents;
 
 
             } while (cursor.moveToNext()) ;

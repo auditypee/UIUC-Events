@@ -1,19 +1,22 @@
 package com.example.audibayron.uiuc_events;
 
+import android.app.Activity;
+
 import com.google.android.gms.maps.model.LatLng;
 
-public class Events {
+public class Events extends Activity{
     //Variables that takes from the database
     private int _id;
     private String eventName;
     private String addressName;
-    private LatLng addressCo;
-    private String details;
     private int date;
     private int month;
     private int year;
+    private String details;
+    private double lat;
+    private double lng;
+    private LatLng addressCo;
 
-    DBAdapter myDb;
     /**
      * CONSTRUCTORS
      */
@@ -23,22 +26,26 @@ public class Events {
     }
 
     //Main Constructor
-    public Events(int mId, String mEventName, String mAddressName, LatLng mAddressCo, String mDetails,
-                  int mDate, int mMonth, int mYear) {
-        this._id = mId;
-        this.eventName = mEventName;
-        this.addressName = mAddressName;
-        this.addressCo = mAddressCo;
-        this.details = mDetails;
-        this.date = mDate;
-        this.month = mMonth;
-        this.year = mYear;
+    public Events(int _id, String eventName, String addressName, int date, int month, int year, String details,
+                  double lat, double lng) {
+        this._id = _id;
+        this.eventName = eventName;
+        this.addressName = addressName;
+        this.date = date;
+        this.month = month;
+        this.year = year;
+        this.details = details;
+        this.addressCo = convertToLatLng(lat, lng);
+    }
+
+    private LatLng convertToLatLng(double lat, double lng) {
+        LatLng latlng = new LatLng(lat, lng);
+        return latlng;
     }
 
     /**
      * ACCESSOR METHODS
      */
-
     //Getters
     public int getId() {
         return _id;
@@ -72,6 +79,14 @@ public class Events {
         return year;
     }
 
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
     //Setters
     public void setEventName(String mEventName) {
         this.eventName = mEventName;
@@ -100,7 +115,6 @@ public class Events {
     public void setYear(int mYear) {
         this.year = mYear;
     }
-
 
 }
 

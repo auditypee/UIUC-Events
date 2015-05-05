@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-        android:background="#fff">
+        android:background="#ff2d2d2d">
 
     <LinearLayout
       android:layout_width="200dp"
       android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#ff2d2d2d">
 
       <TextView
           android:text="Event"
@@ -18,7 +19,7 @@
           android:id="@+id/iEventName"
           android:gravity="center"
           android:layout_marginBottom="10dp"
-          android:textColor="#ffffbd00"/>
+          android:textColor="#ffe4e4e4" />
       <TextView
           android:text="Details"
           android:layout_width="match_parent"
@@ -27,7 +28,7 @@
           android:id="@+id/iDetails"
           android:gravity="center"
           android:layout_marginBottom="10dp"
-          android:textColor="#ffffbd00"/>
+          android:textColor="#ffe4e4e4" />
 
     </LinearLayout>
 

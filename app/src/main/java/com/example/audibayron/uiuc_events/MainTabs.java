@@ -24,7 +24,6 @@ public class MainTabs extends TabActivity {
                         .setIndicator("Events")
                         .setContent(new Intent(this, MainActivity.class))
         );
-
     }
 
 }
